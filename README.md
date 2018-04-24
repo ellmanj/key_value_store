@@ -38,4 +38,4 @@ error. See TODO in `test_set_duplicate_key`.
 * Improve the UI
   * Get rid of the alert boxes
   * Consider bootstrap alerts for errors
-  * Consider bootstrap modals or displaying results
+  * Consider bootstrap modals for displaying results
