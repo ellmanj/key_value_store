@@ -31,11 +31,11 @@ python tests.py
   * Use a better database (e.g. PostgreSQL)
   * Consider adding metrics on latency and DB query time
   * Consider adding logging
-* Organize files better, instead of everything in one file
+* As the application gets bigger, organize files better instead of everything in the one `key_value_store.py` file
 * Surface duplicate key validation error in API response instead of 
 the generic "Could not determine specific validation errors" validation 
-error. See `test_set_duplicate_key`.
+error. See TODO in `test_set_duplicate_key`.
 * Improve the UI
-  * Get rid of the alert boxes.
-  * Consider bootstrap alerts for errors.
-  * Consider bootstrap modals or displaying results.
+  * Get rid of the alert boxes
+  * Consider bootstrap alerts for errors
+  * Consider bootstrap modals or displaying results
