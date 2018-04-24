@@ -1,3 +1,12 @@
+# Key Value Store
+This app is a basic key-value store.
+* JSON REST API using Flask-Restless
+* Bootstrap frontend for getting/setting values
+
+## Assumptions
+* Keys and values can be any unicode strings
+* The value for a key cannot be overwritten once it is set
+
 ## Running the App
 * Make sure you're on python3
 * Install python packages
@@ -15,10 +24,6 @@ $ flask run
 ```
 python tests.py
 ```
-
-## Assumptions
-* Keys and values can be any unicode strings
-* A key cannot be overwritten once it is set
 
 ## Further Work
 * Make production-ready
