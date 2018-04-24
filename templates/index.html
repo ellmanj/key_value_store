@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Key Value Store</title>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container">
+        <h1 class="text-center">Key Value Store</h1>
+        <br>
+        <h2>Store a Value</h2>
+        <form id="storeForm" class="form-inline">
+            <div class="form-group">
+                <label for="storeKey">Key</label>
+                <input type="text" class="form-control" id="storeKey" required>
+                <label for="storeValue">Value</label>
+                <input type="text" class="form-control" id="storeValue" required>
+            </div>
+            <button id="storeButton" type="submit" class="btn btn-primary ">Store</button>
+        </form>
+        <br>
+        <h2>Retrieve a Value</h2>
+        <form id="retrieveForm" class="form-inline">
+            <div class="form-group">
+                <label for="retrieveKey">Key</label>
+                <input type="text" class="form-control" id="retrieveKey" required>
+            </div>
+            <button id="retrieveButton" type="submit" class="btn btn-primary">Retrieve</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script type="text/javascript">
+        $("#storeForm").submit(function(e) {
+            e.preventDefault();
+            var data = JSON.stringify({
+                    key: $("#storeKey").val(),
+                    value: $("#storeValue").val()
+                });
+            $.ajax({
+                type: "POST",
+                url: "/api/entry",
+                data: data,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(result) {
+                    alert('Entry successfully stored');
+                    $("#storeForm")[0].reset();
+                },
+                error: function(result) {
+                    alert('There was a problem storing your entry. Has that key been used already?');
+                    $("#storeForm")[0].reset();
+                }
+            });
+        });
+
+        $("#retrieveForm").submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "/api/entry/" + encodeURIComponent($("#retrieveKey").val()),
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(result) {
+                    alert('The value for key ' + result.key + ' is ' + result.value);
+                    $("#retrieveForm")[0].reset();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    if(xhr.status == 404) {
+                        alert("No value for that key yet");
+                        $("#retrieveForm")[0].reset();
+                    }
+                    else {
+                        alert('There was a problem retrieving your entry');
+                        $("#storeForm")[0].reset();
+                    }
+                }
+            });
+        });
+    </script>
+  </body>
+</html>
