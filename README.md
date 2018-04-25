@@ -39,3 +39,8 @@ error. See TODO in `test_set_duplicate_key`.
   * Get rid of the alert boxes
   * Consider bootstrap alerts for errors
   * Consider bootstrap modals for displaying results
+* Add user functionality.
+  * I didn't have enough time to add user login and logout functionality within a few hours, but it could be added using Flask-Login.
+  * A User foreign key could be added to the Entry model indicating the owner of the entry.
+  * The Entry data model would need to be changed so that `key` is not the primary key. A new, non-user-facing key would need to be added as the primary key (for example a UUID). That way different users could add entries with the same key.
+  * The API responses would need to filter for only entries owned by the requesting user.
